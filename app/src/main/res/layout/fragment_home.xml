@@ -1,16 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.homeFragment.HomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/toolbar_bg"
+        >
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/wallpapers"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:id="@+id/horizontalView"
+        android:scrollbars="none"
+        >
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedChip="@+id/chipHomeFragAll"
+            >
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragNature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nature"
+                style="@style/CustomChipStyle"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragArchitecture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/architecture"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/business"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/work"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragFashion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fashion"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/health"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragPhotography"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/photography"
+                />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragInteriors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interiors"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragTravel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/travel"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragArts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arts"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHomeFragCulture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/culture"
+                />
+
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFragmentHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerViewFragmentHome"
-
+        android:layout_below="@id/horizontalView"
         />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

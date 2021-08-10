@@ -1,6 +1,7 @@
 package com.example.unsplashimageapp.data
 
 import android.accounts.NetworkErrorException
+import android.text.TextUtils
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.unsplashimageapp.data.Entity.UnSplashResponseItem
@@ -17,10 +18,8 @@ class UnSplashPagingSource(private val api:UnSplashApi,private val query:String?
     {
         return state.anchorPosition?.let()
         {
-
             val anchorPage = state.closestPageToPosition(it)
             anchorPage?.prevKey?.plus(1) ?:anchorPage?.nextKey?.minus(1)
-
         }
     }
 
@@ -28,9 +27,21 @@ class UnSplashPagingSource(private val api:UnSplashApi,private val query:String?
     {
         val page = params.key ?: 1
 
+
+        var response:Response<List<UnSplashResponseItem>>
+
         return try
         {
-            val response = api.getPhotos(page,params.loadSize)
+
+            // Same PagingSource is used for both api functions
+
+            if(query.isNullOrEmpty())
+            {
+              response  = api.getPhotos(page,params.loadSize)
+            }else
+            {
+                response  = api.searchPhotos(query,page,params.loadSize)
+            }
 
             LoadResult.Page(
                 data = response.body()!!,

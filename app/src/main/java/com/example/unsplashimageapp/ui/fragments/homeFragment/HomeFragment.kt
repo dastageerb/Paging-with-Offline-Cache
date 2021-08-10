@@ -1,10 +1,9 @@
 package com.example.unsplashimageapp.ui.fragments.homeFragment
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -31,13 +30,14 @@ class HomeFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         setupRecyclerView(binding.recyclerViewFragmentHome)
         viewModel.getImages.observe(viewLifecycleOwner)
         {
             it.let ()
             {
-                Timber.tag(TAG).d("itemList : "+it)
                 adapter.submitData(lifecycle,it)
             }
         }
@@ -50,10 +50,11 @@ class HomeFragment : Fragment()
     private fun setupRecyclerView(recycler: RecyclerView)
     {
         recycler.setHasFixedSize(true)
-        recycler.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        recycler.adapter = adapter.withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
-        ,footer = LoadingStateAdapter{adapter.retry()}
-        )
+        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+        recycler.adapter = adapter
+            //.withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
+        //,footer = LoadingStateAdapter{adapter.retry()}
+        //)
     }
 
     override fun onDestroyView()
@@ -63,4 +64,8 @@ class HomeFragment : Fragment()
 
     } // OnDestroyView closed
 
-}
+
+
+
+
+} // HomeFragment closed

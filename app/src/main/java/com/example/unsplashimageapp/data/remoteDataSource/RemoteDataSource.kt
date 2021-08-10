@@ -23,5 +23,10 @@ class RemoteDataSource @Inject constructor(private val api:UnSplashApi)
         UnSplashPagingSource(api)
     }.liveData
 
+    fun searchPhotos(query:String) = Pager(PagingConfig(20))
+    {
+        UnSplashPagingSource(api,query)
+    }.liveData
+
 
 } // RemoteDataSource closed

@@ -30,7 +30,7 @@ class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
         val item = getItem(position)
         LayoutRecylerImageItemsBinding.bind(holder.itemView).apply ()
         {
-            Picasso.get().load(item?.urls?.thumb).into(imageViewRecyclerImageItems)
+            Picasso.get().load(item?.urls?.small).into(imageViewRecyclerImageItems)
         }
     }
 
