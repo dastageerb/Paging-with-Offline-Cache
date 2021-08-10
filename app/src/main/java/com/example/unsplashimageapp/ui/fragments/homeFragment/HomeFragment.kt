@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.databinding.FragmentHomeBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.ImagesAdapter
+import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.LoadingStateAdapter
 import com.example.unsplashimageapp.utils.Constants.TAG
 import com.example.unsplashimageapp.utils.ItemComparator
 import com.example.unsplashimageapp.viewmodel.MainViewModel
@@ -50,7 +51,9 @@ class HomeFragment : Fragment()
     {
         recycler.setHasFixedSize(true)
         recycler.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        recycler.adapter = adapter
+        recycler.adapter = adapter.withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
+        ,footer = LoadingStateAdapter{adapter.retry()}
+        )
     }
 
     override fun onDestroyView()

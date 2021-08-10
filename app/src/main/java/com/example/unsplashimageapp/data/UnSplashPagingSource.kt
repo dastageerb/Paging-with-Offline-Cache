@@ -1,10 +1,13 @@
 package com.example.unsplashimageapp.data
 
+import android.accounts.NetworkErrorException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.unsplashimageapp.data.Entity.UnSplashResponseItem
 import com.example.unsplashimageapp.data.api.UnSplashApi
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 import java.lang.Exception
 
 class UnSplashPagingSource(private val api:UnSplashApi,private val query:String? = null) : PagingSource<Int,UnSplashResponseItem>()
@@ -27,7 +30,6 @@ class UnSplashPagingSource(private val api:UnSplashApi,private val query:String?
 
         return try
         {
-
             val response = api.getPhotos(page,params.loadSize)
 
             LoadResult.Page(
@@ -36,11 +38,14 @@ class UnSplashPagingSource(private val api:UnSplashApi,private val query:String?
                 nextKey = if(response.body().isNullOrEmpty()) null else page+1
             )
 
-
-        }catch (e:Exception)
+        }catch (e: IOException)
+        {
+            LoadResult.Error(e)
+        } catch (e:HttpException)
         {
             LoadResult.Error(e)
         }
+
 
 
 
