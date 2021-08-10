@@ -11,7 +11,7 @@ import retrofit2.Response
 import java.io.IOException
 import java.lang.Exception
 
-class UnSplashPagingSource(private val api:UnSplashApi,private val query:String? = null) : PagingSource<Int,UnSplashResponseItem>()
+class UnSplashSearchPagingSource(private val api:UnSplashApi, private val query:String? = null) : PagingSource<Int,UnSplashResponseItem>()
 {
 
     override fun getRefreshKey(state: PagingState<Int, UnSplashResponseItem>): Int?
@@ -32,17 +32,14 @@ class UnSplashPagingSource(private val api:UnSplashApi,private val query:String?
         return try
         {
 
+            // Same PagingSource is used for both api functions
 
-
-             val  response  = api.getPhotos(page,params.loadSize)
-
-
-
+              val  response = api.searchPhotos(query.toString(),page,params.loadSize)
 
             LoadResult.Page(
-                data = response.body()!!,
+                data = response.body()?.results!!,
                 prevKey = if(page==1) null else page-1,
-                nextKey = if(response.body().isNullOrEmpty()) null else page+1
+                nextKey = if(response.body()?.results.isNullOrEmpty()) null else page+1
             )
 
         }catch (e: IOException)

@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.unsplashimageapp.data.Entity.UnSplashResponseItem
 import com.example.unsplashimageapp.data.UnSplashPagingSource
+import com.example.unsplashimageapp.data.UnSplashSearchPagingSource
 import com.example.unsplashimageapp.data.api.UnSplashApi
 import com.example.unsplashimageapp.utils.NetworkResource
 import retrofit2.Response
@@ -25,7 +26,7 @@ class RemoteDataSource @Inject constructor(private val api:UnSplashApi)
 
     fun searchPhotos(query:String) = Pager(PagingConfig(20))
     {
-        UnSplashPagingSource(api,query)
+        UnSplashSearchPagingSource(api,query)
     }.liveData
 
 

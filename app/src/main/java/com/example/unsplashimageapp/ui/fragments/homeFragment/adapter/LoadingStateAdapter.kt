@@ -8,6 +8,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unsplashimageapp.databinding.LayoutLoadStateAdapterBinding
+import com.example.unsplashimageapp.utils.NetworkResource
 
 class LoadingStateAdapter(val retry:()->Unit) : LoadStateAdapter<LoadingStateAdapter.ViewHolder>()
 {
@@ -32,24 +33,26 @@ class LoadingStateAdapter(val retry:()->Unit) : LoadStateAdapter<LoadingStateAda
         LayoutLoadStateAdapterBinding.bind(holder.itemView).apply()
         {
 
-            when(loadState)
-            {
-                is LoadState.Loading ->
-                {
-                    progressBar.isVisible
-                    !buttonRetry.isVisible
-                }
-                is LoadState.NotLoading ->
-                {
-                    !progressBar.isVisible
-                    !buttonRetry.isVisible
-                }
-                is LoadState.Error ->
-                {
-                    buttonRetry.isVisible
-                    !progressBar.isVisible
-                }
-            } // when closed
+            progressBar.isVisible = loadState is LoadState.Loading
+
+//            when(loadState)
+//            {
+//                is LoadState.Loading ->
+//                {
+//                    progressBar.isVisible
+//                   // !buttonRetry.isVisible
+//                }
+//                is LoadState.NotLoading ->
+//                {
+//                    !progressBar.isVisible
+//                    //!buttonRetry.isVisible
+//                }
+//                is LoadState.Error ->
+//                {
+//                   // buttonRetry.isVisible
+//                    !progressBar.isVisible
+//                }
+//            } // when closed
 
             buttonRetry.setOnClickListener()
             {
