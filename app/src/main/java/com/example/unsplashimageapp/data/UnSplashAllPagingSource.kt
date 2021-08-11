@@ -1,17 +1,13 @@
 package com.example.unsplashimageapp.data
 
-import android.accounts.NetworkErrorException
-import android.text.TextUtils
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.unsplashimageapp.data.Entity.UnSplashResponseItem
+import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.api.UnSplashApi
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
-import java.lang.Exception
 
-class UnSplashPagingSource(private val api:UnSplashApi,private val query:String? = null) : PagingSource<Int,UnSplashResponseItem>()
+class UnSplashAllPagingSource(private val api:UnSplashApi, private val query:String? = null) : PagingSource<Int, UnSplashResponseItem>()
 {
 
     override fun getRefreshKey(state: PagingState<Int, UnSplashResponseItem>): Int?

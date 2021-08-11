@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
 import com.example.unsplashimageapp.data.repository.Repository
+import com.example.unsplashimageapp.utils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,8 +19,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(application: Application,private  val repository: Repository) : AndroidViewModel(application)
 {
 
-    val allImages = repository.remote.getPhotos().cachedIn(viewModelScope)
+    /** Getting List Responses */
 
+    val allImages = repository.remote.getPhotos().cachedIn(viewModelScope)
 
     val currentQuery =  MutableLiveData("")
 
@@ -35,4 +38,9 @@ class MainViewModel @Inject constructor(application: Application,private  val re
     }
 
 
-}
+
+
+
+
+
+} // MainViewModel closed

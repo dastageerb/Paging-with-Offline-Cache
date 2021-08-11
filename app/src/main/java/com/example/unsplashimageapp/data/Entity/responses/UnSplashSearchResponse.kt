@@ -1,6 +1,7 @@
-package com.example.unsplashimageapp.data.Entity
+package com.example.unsplashimageapp.data.Entity.responses
 
 
+import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

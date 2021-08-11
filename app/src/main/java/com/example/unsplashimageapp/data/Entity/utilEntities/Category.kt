@@ -1,11 +1,11 @@
-package com.example.unsplashimageapp.data.Entity
+package com.example.unsplashimageapp.data.Entity.utilEntities
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Type(
+data class Category(
     @Json(name = "pretty_slug")
     val prettySlug: String?,
     @Json(name = "slug")

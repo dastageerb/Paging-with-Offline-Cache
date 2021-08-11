@@ -1,26 +1,24 @@
 package com.example.unsplashimageapp.ui.fragments.homeFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.databinding.FragmentHomeBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.ImagesAdapter
-import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.LoadingStateAdapter
 import com.example.unsplashimageapp.utils.Constants.TAG
+import com.example.unsplashimageapp.utils.ExtensionFunction
+import com.example.unsplashimageapp.utils.ExtensionFunction.hasInternetConnection
+import com.example.unsplashimageapp.utils.ExtensionFunction.hide
+import com.example.unsplashimageapp.utils.ExtensionFunction.show
 import com.example.unsplashimageapp.utils.ItemComparator
 import com.example.unsplashimageapp.viewmodel.MainViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import timber.log.Timber
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -50,15 +48,13 @@ class HomeFragment : Fragment()
             val query = chip.text.toString().toLowerCase()
             when(query)
             {
-
                 "all" ->
                 {
-                    Timber.d(query)
-                    //subscribeAllImagesObserver()
+                    // if category/chip - all is checked get all photos
+                    subscribeAllImagesObserver()
                 }
                 else ->
                 {
-                    Timber.d(query)
                     viewModel.searchImages(query)
                     subscribeSearchObserver()
                 }
@@ -72,39 +68,76 @@ class HomeFragment : Fragment()
     } // onCreateView closed
 
 
-    private fun subscribeAllImagesObserver()
-    {
-        viewModel.allImages.observe(viewLifecycleOwner)
-        {
-            it.let ()
-            {
-                adapter.submitData(lifecycle,it)
-            } // it closed
-        } // observer closed
-    } // subscribeAllImagesObserver closed
-
-
-    private fun subscribeSearchObserver()
-    {
-        viewModel.queriedImages.observe(viewLifecycleOwner)
-        {
-            it?.let()
-            {
-                adapter.submitData(lifecycle,it)
-            }
-        }
-    }
-
     private fun setupRecyclerView(recycler: RecyclerView)
     {
         recycler.setHasFixedSize(true)
-        //recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
         recycler.adapter = adapter
-            .withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
-        ,footer = LoadingStateAdapter{adapter.retry()}
-        )
+//            .withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
+//        ,footer = LoadingStateAdapter{adapter.retry()}
+//        )
     }
+
+
+
+
+
+    private fun subscribeAllImagesObserver()
+    {
+
+        when(requireContext().hasInternetConnection())
+        {
+            true ->
+            {
+                binding.textViewNoInternet.hide() // hide no internet icon
+
+                viewModel.allImages.observe(viewLifecycleOwner)
+                {
+                    it.let ()
+                    {
+                        adapter.submitData(lifecycle,it)
+                    } // it closed
+                } // observer closed
+
+            } // true closed
+
+            false ->
+            {
+                binding.textViewNoInternet.show()
+            } // false closed
+
+        } // when closed
+
+
+    } // subscribeAllImagesObserver closed
+
+    // checks internet before observing
+    private fun subscribeSearchObserver()
+    {
+        when(requireContext().hasInternetConnection())
+        {
+            true ->
+            {
+                binding.textViewNoInternet.hide() // hide no internet icon
+
+                viewModel.queriedImages.observe(viewLifecycleOwner)
+                {
+                    it?.let()
+                    {
+                        adapter.submitData(lifecycle,it)
+                    }
+                }
+
+            } // true closed
+
+            false ->
+            {
+                binding.textViewNoInternet.show()
+            } // false closed
+
+        } // when closed
+    } // subscribeSearchObserver closed
+
 
     override fun onDestroyView()
     {

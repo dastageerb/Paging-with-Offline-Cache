@@ -1,6 +1,10 @@
-package com.example.unsplashimageapp.data.Entity
+package com.example.unsplashimageapp.data.Entity.responses
 
 
+import com.example.unsplashimageapp.data.Entity.utilEntities.Links
+import com.example.unsplashimageapp.data.Entity.utilEntities.Sponsorship
+import com.example.unsplashimageapp.data.Entity.utilEntities.Urls
+import com.example.unsplashimageapp.data.Entity.utilEntities.User
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

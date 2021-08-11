@@ -1,4 +1,4 @@
-package com.example.unsplashimageapp.data.Entity
+package com.example.unsplashimageapp.data.Entity.utilEntities
 
 
 import com.squareup.moshi.Json

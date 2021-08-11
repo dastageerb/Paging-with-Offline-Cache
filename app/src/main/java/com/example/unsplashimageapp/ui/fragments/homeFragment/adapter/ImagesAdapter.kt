@@ -2,12 +2,14 @@ package com.example.unsplashimageapp.ui.fragments.homeFragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
-import com.example.unsplashimageapp.data.Entity.UnSplashResponseItem
+import com.example.unsplashimageapp.R
+import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
+import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
 import com.squareup.picasso.Picasso
 
 class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
@@ -30,9 +32,19 @@ class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
         val item = getItem(position)
         LayoutRecylerImageItemsBinding.bind(holder.itemView).apply ()
         {
-            Picasso.get().load(item?.urls?.small).into(imageViewRecyclerImageItems)
+            Picasso.get().load(item?.urls?.small)
+                .into(imageViewRecyclerImageItems)
+
         }
-    }
+
+        holder.itemView.setOnClickListener()
+        {
+            val action  = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item?.id.toString())
+            holder.itemView.findNavController().navigate(action)
+        }
+
+
+    } // onBindViewHolder closed
 
 
 }

@@ -139,7 +139,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/horizontalView"
-        />
+    />
+
+    <TextView
+        android:id="@+id/textViewNoInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.6"
+        android:layout_centerInParent="true"
+        android:text="No Internet Connection"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:drawableTopCompat="@drawable/ic_baseline_no_internet_24" />
 
 
 </RelativeLayout>

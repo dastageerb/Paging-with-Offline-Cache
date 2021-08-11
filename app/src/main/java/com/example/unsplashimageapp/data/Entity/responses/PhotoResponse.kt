@@ -1,13 +1,14 @@
-package com.example.unsplashimageapp.data.Entity
+package com.example.unsplashimageapp.data.Entity.responses
 
 
+import com.example.unsplashimageapp.data.Entity.utilEntities.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CoverPhoto(
+data class PhotoResponse(
     @Json(name = "alt_description")
-    val altDescription: Any?,
+    val altDescription: String?,
     @Json(name = "blur_hash")
     val blurHash: String?,
     @Json(name = "categories")
@@ -20,6 +21,10 @@ data class CoverPhoto(
     val currentUserCollections: List<Any>?,
     @Json(name = "description")
     val description: String?,
+    @Json(name = "downloads")
+    val downloads: Int?,
+    @Json(name = "exif")
+    val exif: Exif?,
     @Json(name = "height")
     val height: Int?,
     @Json(name = "id")
@@ -30,16 +35,30 @@ data class CoverPhoto(
     val likes: Int?,
     @Json(name = "links")
     val links: Links?,
+    @Json(name = "location")
+    val location: Location?,
+    @Json(name = "meta")
+    val meta: Meta?,
     @Json(name = "promoted_at")
     val promotedAt: Any?,
+    @Json(name = "related_collections")
+    val relatedCollections: RelatedCollections?,
     @Json(name = "sponsorship")
     val sponsorship: Any?,
+    @Json(name = "tags")
+    val tags: List<Tag>?,
+    @Json(name = "tags_preview")
+    val tagsPreview: List<TagsPreview>?,
+    @Json(name = "topics")
+    val topics: List<Any>?,
     @Json(name = "updated_at")
     val updatedAt: String?,
     @Json(name = "urls")
     val urls: Urls?,
     @Json(name = "user")
     val user: User?,
+    @Json(name = "views")
+    val views: Int?,
     @Json(name = "width")
     val width: Int?
 )
