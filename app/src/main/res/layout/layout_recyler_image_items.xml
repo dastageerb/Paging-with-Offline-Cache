@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     app:cardElevation="10dp"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="16dp"
+    >
 
     <ImageView
         android:id="@+id/imageViewRecyclerImageItems"
@@ -13,6 +14,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/image"
         android:scaleType="fitXY"
-
         />
+
 </com.google.android.material.card.MaterialCardView>

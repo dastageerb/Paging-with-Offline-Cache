@@ -42,7 +42,6 @@
             app:singleSelection="true"
             app:singleLine="true"
             app:selectionRequired="true"
-            app:checkedChip="@+id/chipHomeFragAll"
             >
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipHomeFragAll"

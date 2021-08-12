@@ -10,6 +10,7 @@ import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
+import com.example.unsplashimageapp.utils.ExtensionFunction.load
 import com.squareup.picasso.Picasso
 
 class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
@@ -32,9 +33,8 @@ class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
         val item = getItem(position)
         LayoutRecylerImageItemsBinding.bind(holder.itemView).apply ()
         {
-            Picasso.get().load(item?.urls?.small)
-                .into(imageViewRecyclerImageItems)
 
+            imageViewRecyclerImageItems.load(item?.urls?.small)
         }
 
         holder.itemView.setOnClickListener()

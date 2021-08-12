@@ -14,6 +14,7 @@ import com.example.unsplashimageapp.utils.ExtensionFunction.hasInternetConnectio
 import com.example.unsplashimageapp.utils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import timber.log.Timber
@@ -33,10 +34,16 @@ class DetailsViewModel @Inject constructor(application: Application,private  val
         {
             getSinglePhotoSafeCall(id)
         } // viewModelScope closed
+
+
+
+
     } // getSinglePhoto closed
 
     private suspend fun getSinglePhotoSafeCall(id: String)
     {
+
+
         singlePhoto.postValue(NetworkResource.Loading())
         if(getApplication<Application>().hasInternetConnection())
         {
@@ -62,13 +69,13 @@ class DetailsViewModel @Inject constructor(application: Application,private  val
     private fun handleImageResponse(response: Response<PhotoResponse>): NetworkResource<PhotoResponse>?
     {
 
-        return when(response.code())
+        return when
         {
-            200 -> NetworkResource.Success(response.body()!!)
-            400 -> NetworkResource.Error("Bad Request")
-            401 -> NetworkResource.Error("No Access Granted")
-            403 -> NetworkResource.Error("Permission is missing")
-            404 -> NetworkResource.Error("Could Not Found")
+            response.isSuccessful && response.body()!=null  -> NetworkResource.Success(response.body()!!)
+            response.code() == 400 -> NetworkResource.Error("Bad Request")
+            response.code() == 401 -> NetworkResource.Error("No Access Granted")
+            response.code() == 403 -> NetworkResource.Error("Permission is missing")
+            response.code() == 404 -> NetworkResource.Error("Could Not Found")
             else -> NetworkResource.Error("Something went wrong ")
         } // when closed
     } // handleImageResponse closed

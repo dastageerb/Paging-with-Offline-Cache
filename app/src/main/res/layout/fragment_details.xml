@@ -1,40 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.detailsFragment.DetailsFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="350dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        >
 
-    <TextView
-        android:id="@+id/textView2"
+        <RelativeLayout
+            android:id="@+id/detailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="30dp">
+
+                <ImageView
+                    android:id="@+id/imageViewUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/image" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textViewDetailsFragUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="42dp"
+                android:layout_toEndOf="@id/cardView"
+                android:fontFamily="@font/aclonica"
+                android:text="user name"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageViewDetailsFrag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardView"
+                android:layout_marginTop="10dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/textViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageViewDetailsFrag"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Views"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/texViewDetailsFragViewsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViews"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:text="12,669,742"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/textDownloads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/texViewDetailsFragViewsCount"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Downloads"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/texViewDetailsFragDownloadsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textDownloads"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:text="12,669,742"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewDetailsFragLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/texViewDetailsFragDownloadsCount"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:drawablePadding="8dp"
+                android:text="iceland"
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/ic_baseline_location_24"
+                />
+
+
+            <TextView
+                android:id="@+id/textViewDetailsFragPublishedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailsFragLocation"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:text="16-4-20202"
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/ic_baseline_uploaded_24" />
+
+            <TextView
+                android:id="@+id/textViewDetailsFragLicence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDetailsFragPublishedAt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:text="Free to Use under the Unsplash Licence"
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/ic_outline_licened_24" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDetailsFragDownload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewDetailsFragLicence"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="60dp"
+                android:text="Download"
+                android:background="@drawable/button_bg"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/black" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <ProgressBar
+        android:id="@+id/progressBarDetailsFrag"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        />
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/heavyGrey"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:text="TextView"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

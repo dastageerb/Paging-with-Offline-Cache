@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity()
         navController = findNavController(R.id.fragment_nav_host)
 
 
+
+
+
     } // onCreateView closed
 
     override fun onDestroy()

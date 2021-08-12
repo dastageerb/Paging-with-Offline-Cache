@@ -37,10 +37,6 @@ object NetworkModule
                             .build()
                     )
                 }
-
-
-
-
         }
 
     @Singleton

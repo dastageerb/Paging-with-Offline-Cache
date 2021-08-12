@@ -21,22 +21,12 @@ class MainViewModel @Inject constructor(application: Application,private  val re
 
     /** Getting List Responses */
 
-    val allImages = repository.remote.getPhotos().cachedIn(viewModelScope)
+    fun getAllImages() = repository.remote.getPhotos()
 
-    val currentQuery =  MutableLiveData("")
 
-    val  queriedImages = currentQuery.switchMap()
-    {
-        Timber.d("it :"+it)
-        repository.remote.searchPhotos(it).cachedIn(viewModelScope)
-    }
 
-    fun  searchImages(query: String)
-    {
-        Timber.d(query)
-        currentQuery.postValue(query)
-    }
-
+    /** Getting Searched Response*/
+    fun getSearchedImages(query:String) = repository.remote.searchPhotos(query)
 
 
 
