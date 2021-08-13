@@ -99,6 +99,7 @@ class HomeFragment : Fragment()
 
     private fun loadImagesIntoRecycler(query: String)
     {
+        binding.progressBarHomeFrag.show()
         Timber.tag(TAG).d(query)
         viewModel // to avoid observer on main thread Exception
         lifecycleScope.launch(Dispatchers.IO)
@@ -109,7 +110,9 @@ class HomeFragment : Fragment()
                 withContext(Dispatchers.Main) // loadViews on main thread
                 {
                     Timber.tag(TAG).d(""+it)
+                    binding.progressBarHomeFrag.hide()
                     adapter.submitData(lifecycle,it)
+
                 } // withContext closed
             } // getAllImages
 
@@ -132,16 +135,16 @@ class HomeFragment : Fragment()
 
     private fun loadImagesIntoRecycler()
     {
+        binding.progressBarHomeFrag.show()
         viewModel // to avoid observer on main thread Exception
         lifecycleScope.launch(Dispatchers.IO)
         {
             viewModel.getAllImages().collect()
             {
-
                 withContext(Dispatchers.Main) // loadViews on main thread
                 {
+                    binding.progressBarHomeFrag.hide()
                     adapter.submitData(lifecycle,it)
-                    Timber.tag(TAG).d(""+adapter.itemCount)
                 } // withContext closed
             } // getAllImages
 

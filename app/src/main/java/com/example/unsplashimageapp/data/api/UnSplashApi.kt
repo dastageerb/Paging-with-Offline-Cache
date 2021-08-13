@@ -4,10 +4,7 @@ import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashSearchResponse
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface UnSplashApi
 {
@@ -26,13 +23,13 @@ interface UnSplashApi
         @Query("per_page") perPage: Int
     ) : Response<UnSplashSearchResponse>
 
-//    @GET("data/{version}/")
-//    fun getWeatherReport1(@Path("version") version: String?): Call<Weather?>?
 
+    // // getSinglePhoto  = photo Details
     @GET("/photos/{id}")
     suspend fun getSinglePhoto(@Path("id")id:String) : Response<PhotoResponse>
 
-//    @GET("photos/{id}")
-//    suspend fun getByIdSuspend(@Path("id") id: String): Response<PhotoResponse>
+
+
+
 
 }

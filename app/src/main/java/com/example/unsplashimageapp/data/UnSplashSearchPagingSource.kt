@@ -23,8 +23,6 @@ class UnSplashSearchPagingSource(private val api:UnSplashApi, private val query:
     {
         val page = params.key ?: 1
 
-
-
         return try
         {
 
