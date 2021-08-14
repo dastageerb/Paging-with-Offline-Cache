@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import com.example.unsplashimageapp.data.UnSplashAllPagingSource
 import com.example.unsplashimageapp.data.UnSplashSearchPagingSource
 import com.example.unsplashimageapp.data.api.UnSplashApi
+import com.example.unsplashimageapp.utils.ExtensionFunction.url
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -27,8 +28,10 @@ class RemoteDataSource @Inject constructor(private val api:UnSplashApi)
     /** Details Fragment api call */
 
     // getSinglePhoto  = photo Details
-    suspend fun getSinglePhoto(id:String) = api.getSinglePhoto(id);
+    suspend fun getPhotoDetails(id:String) = api.getPhotoDetails(id);
 
+    // getSinglePhoto  = photo Details
+    suspend fun downloadPhoto(url:String) = api.downloadPhoto(url);
 
 
 

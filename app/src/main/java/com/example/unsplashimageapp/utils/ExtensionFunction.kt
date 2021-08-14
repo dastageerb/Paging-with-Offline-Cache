@@ -5,19 +5,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
 import android.widget.ImageView
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
-import com.example.unsplashimageapp.viewmodel.MainViewModel
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import android.widget.Toast
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import retrofit2.http.Url
+import java.net.URI
+import java.net.URL
 import java.util.*
 
 object ExtensionFunction
@@ -37,12 +29,12 @@ object ExtensionFunction
 
     // extension function for Picasso
 
-    fun ImageView.load(url:String?)
+    fun ImageView.load(url: String?)
     {
         Picasso.get().load(url).into(this)
     }
 
-    fun ImageView.load(url:String?, placeHolder: Int)
+    fun ImageView.load(url: String?, placeHolder: Int)
     {
         Picasso.get().load(url).placeholder(placeHolder).into(this)
     }
@@ -66,7 +58,17 @@ object ExtensionFunction
     } // hasInternetConnection
 
 
+    fun Context.showToast(msg: String)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    } // showToast closed
 
+
+    var str = "http://google.com"
+    var uri: URI = URI(str)
+    var url: URL = uri.toURL()
+
+    fun toUrl(url: String?) :URL =  URI(url).toURL()
 
 
 

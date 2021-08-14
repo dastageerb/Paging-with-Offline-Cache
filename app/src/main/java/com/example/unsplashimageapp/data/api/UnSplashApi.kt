@@ -3,8 +3,10 @@ package com.example.unsplashimageapp.data.api
 import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashSearchResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
+import java.net.URL
 
 interface UnSplashApi
 {
@@ -26,7 +28,12 @@ interface UnSplashApi
 
     // // getSinglePhoto  = photo Details
     @GET("/photos/{id}")
-    suspend fun getSinglePhoto(@Path("id")id:String) : Response<PhotoResponse>
+    suspend fun getPhotoDetails(@Path("id")id:String) : Response<PhotoResponse>
+
+
+    @GET
+    @Streaming
+    suspend fun downloadPhoto(@Url url: String) : ResponseBody
 
 
 
