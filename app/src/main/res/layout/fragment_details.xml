@@ -1,168 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.detailsFragment.DetailsFragment">
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
         >
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/main_image"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            />
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/details"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/textViewName"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="30dp"
+
+        >
+        <ImageView
+            android:id="@+id/imageViewUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/user_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/image" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/textViewUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="@string/user_name"
+        android:layout_toEndOf="@id/cardView"
+        android:layout_below="@id/textViewName"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/imageViewDetailsFrag"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/cardView"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/image"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/image_desc" />
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/description"
+            android:textSize="14sp"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/imageViewDetailsFrag"
+            />
+
 
         <RelativeLayout
             android:id="@+id/detailsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/textViewDescription"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
             >
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="30dp">
-
-                <ImageView
-                    android:id="@+id/imageViewUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/image" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:id="@+id/textViewDetailsFragUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="42dp"
-                android:layout_toEndOf="@id/cardView"
-                android:fontFamily="@font/aclonica"
-                android:text="user name"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/imageViewDetailsFrag"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_below="@id/cardView"
-                android:layout_marginTop="10dp"
-                tools:src="@tools:sample/avatars" />
-
             <TextView
                 android:id="@+id/textViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageViewDetailsFrag"
                 android:layout_alignParentStart="true"
+                android:layout_toEndOf="@id/textDownloads"
+                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Views"
-                android:textSize="18sp" />
+                android:text="@string/views"
+                />
 
             <TextView
-                android:id="@+id/texViewDetailsFragViewsCount"
+                android:id="@+id/textViewViewsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViews"
+                android:layout_alignParentStart="true"
+                android:layout_toEndOf="@id/textViewDownloadsCount"
+                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="6dp"
-                android:text="12,669,742"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
+                android:layout_marginTop="8dp"
+                android:text="@string/count" />
 
             <TextView
                 android:id="@+id/textDownloads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/texViewDetailsFragViewsCount"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Downloads"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/texViewDetailsFragDownloadsCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textDownloads"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="6dp"
-                android:text="12,669,742"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textViewDetailsFragLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/texViewDetailsFragDownloadsCount"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:drawablePadding="8dp"
-                android:text="iceland"
-                android:textSize="16sp"
-                app:drawableLeftCompat="@drawable/ic_baseline_location_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:text="@string/downloads"
                 />
 
-
             <TextView
-                android:id="@+id/textViewDetailsFragPublishedAt"
+                android:id="@+id/textViewDownloadsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewDetailsFragLocation"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:drawablePadding="8dp"
-                android:text="16-4-20202"
-                android:textSize="16sp"
-                app:drawableLeftCompat="@drawable/ic_baseline_uploaded_24" />
+                android:text="@string/count"
+                android:layout_below="@id/textDownloads"
+                android:layout_toStartOf="@id/textDownloads"
+                android:layout_marginTop="8dp"
+                />
 
             <TextView
-                android:id="@+id/textViewDetailsFragLicence"
+                android:id="@+id/textViewLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewDetailsFragPublishedAt"
-                android:layout_marginStart="16dp"
+                android:text="@string/location"
+                android:layout_below="@id/textViewDownloadsCount"
+                app:drawableLeftCompat="@drawable/ic_baseline_location_24"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:drawablePadding="8dp"
-                android:text="Free to Use under the Unsplash Licence"
-                android:textSize="16sp"
-                app:drawableLeftCompat="@drawable/ic_outline_licened_24" />
+                />
+
+            <TextView
+                android:id="@+id/textViewCreationDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:layout_below="@id/textViewLocation"
+                app:drawableLeftCompat="@drawable/ic_baseline_uploaded_24"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                />
+
+            <TextView
+                android:id="@+id/textViewLicence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/license"
+                android:layout_below="@id/textViewCreationDate"
+                app:drawableLeftCompat="@drawable/ic_outline_licened_24"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonDetailsFragDownload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewDetailsFragLicence"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="60dp"
-                android:text="Download"
                 android:background="@drawable/button_bg"
+                android:text="@string/download"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="100dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
-              />
+                android:layout_below="@id/textViewLicence"
+                />
+
 
 
         </RelativeLayout>
-    </ScrollView>
 
-
-    <ProgressBar
-        android:id="@+id/progressBarDetailsFrag"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminateTint="@color/heavyGrey"
-        android:visibility="gone" />
-
-
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBarDetailsFrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewDescription"
+            android:indeterminateTint="@color/heavyGrey"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+        />
+    </RelativeLayout>
+</ScrollView>

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
+import com.example.unsplashimageapp.data.Entity.safeArgsObject.ImageDetails
 import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
 import com.example.unsplashimageapp.utils.ExtensionFunction.load
@@ -39,9 +40,17 @@ class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
 
         holder.itemView.setOnClickListener()
         {
-            val action  = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item?.id.toString())
+            val imageDetails = ImageDetails(
+                item?.id,
+                item?.user?.username,
+                item?.user?.profileImage?.medium,
+                item?.urls?.regular,
+                item?.links?.download,
+                item?.altDescription
+            )
+            val action  = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(imageDetails)
             holder.itemView.findNavController().navigate(action)
-        }
+        } // itemView click listener closed
 
 
     } // onBindViewHolder closed

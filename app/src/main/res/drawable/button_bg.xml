@@ -8,12 +8,23 @@
                     <solid android:color="@color/grey"/>
                     <size android:width="200dp" android:height="45dp" />
                     <corners android:radius="50dp" />
-
-
                 </shape>
             </item>
 
-    <item android:state_enabled="true">
+         <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+
+            <solid android:color="@color/heavyGrey"/>
+            <size android:width="200dp" android:height="45dp" />
+            <corners android:radius="50dp" />
+
+        </shape>
+    </item>
+
+
+
+
+    <item  android:state_selected="true">
         <shape android:shape="rectangle">
 
             <solid android:color="@color/black"/>
@@ -23,6 +34,7 @@
 
         </shape>
     </item>
+
 
 
 

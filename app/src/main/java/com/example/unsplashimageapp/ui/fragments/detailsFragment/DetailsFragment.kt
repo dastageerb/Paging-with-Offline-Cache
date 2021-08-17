@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
@@ -53,10 +54,20 @@ class DetailsFragment : Fragment()
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
 
+        binding.apply ()
+        {
+            progressBarDetailsFrag.show()
+            textViewUserName.text = args.photoDetails.username
+            textViewDescription.text = args.photoDetails.description
+            imageViewDetailsFrag.load(args.photoDetails.imageUrl,R.drawable.ic_baseline_place_holder_24)
+            imageViewUser.load(args.photoDetails.userImageUrl,R.drawable.ic_baseline_person_24)
+        }
+
+
         detailsViewModel // declared before coroutine to avoid exception
         lifecycleScope.launch(Dispatchers.IO)
         {
-            detailsViewModel.getPhotoDetails(args.id).collect ()
+            detailsViewModel.getPhotoDetails(args.photoDetails.photoId.toString()).collect ()
             {
                 withContext(Dispatchers.Main)
                 {
@@ -133,6 +144,12 @@ class DetailsFragment : Fragment()
 
 
 
+        binding.imageViewBack.setOnClickListener()
+        {
+            findNavController().navigate(R.id.action_detailsFragment_to_homeFragment)
+        }
+
+
         return binding.root
     } // onCreateView closed
 
@@ -165,7 +182,7 @@ class DetailsFragment : Fragment()
             // Start Download service
             Intent(context, DownloadService::class.java).apply ()
             {
-                    putExtra(Constants.IMAGE_URL,imageUrl)
+                    putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
                     requireContext().startService(this)
             } // intent closed
 
@@ -178,15 +195,10 @@ class DetailsFragment : Fragment()
         {
             binding.apply()
             {
-                imageViewUser.load(data.user?.profileImage?.medium)
-                textViewDetailsFragUserName.text = data.user?.name
-                imageViewDetailsFrag.load(data.urls?.regular, R.drawable.ic_baseline_place_holder_24)
-                texViewDetailsFragViewsCount.text = data.views.toString()
-                texViewDetailsFragDownloadsCount.text = data.downloads.toString()
-                textViewDetailsFragLocation.text = data.location?.country
-                detailsLayout.show()
 
-                imageUrl = data.links?.download.toString()
+                binding.textViewDownloadsCount.text = data.downloads.toString()
+                binding.textViewViewsCount.text = data.views.toString()
+                detailsLayout.show()
             }
 
         } // loadViews closed

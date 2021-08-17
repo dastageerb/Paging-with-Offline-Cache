@@ -16,4 +16,17 @@
     <string name="architecture">Architecture</string>
     <string name="nature">Nature</string>
     <string name="wallpapers">Wallpapers</string>
+    <string name="details">Details</string>
+    <string name="user_name">User name</string>
+    <string name="description">description</string>
+    <string name="views">Views</string>
+    <string name="downloads">Downloads</string>
+    <string name="count">count 123456789</string>
+    <string name="image_desc">TODO</string>
+    <string name="main_image">main image</string>
+    <string name="user_image">user image</string>
+    <string name="download">Download</string>
+    <string name="location">location</string>
+    <string name="date">22-4-2020</string>
+    <string name="license">Free to Use for Every one</string>
 </resources>

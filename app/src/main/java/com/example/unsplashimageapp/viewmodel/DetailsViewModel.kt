@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    application: Application, private val repository: Repository, @ApplicationContext context: Context
+    application: Application, private val repository: Repository
 
 ) : AndroidViewModel(application)
 {
