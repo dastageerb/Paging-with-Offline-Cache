@@ -1,4 +1,4 @@
-package com.example.unsplashimageapp.utils
+package com.example.unsplashimageapp.utils.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem

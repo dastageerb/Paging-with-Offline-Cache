@@ -137,7 +137,7 @@
                 android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/ic_outline_licened_24" />
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonDetailsFragDownload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                 android:text="Download"
                 android:background="@drawable/button_bg"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/black" />
+              />
 
 
         </RelativeLayout>

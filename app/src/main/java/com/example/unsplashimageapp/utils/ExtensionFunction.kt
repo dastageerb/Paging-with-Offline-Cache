@@ -1,11 +1,16 @@
 package com.example.unsplashimageapp.utils
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Color.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
 import retrofit2.http.Url
 import java.net.URI
@@ -20,11 +25,21 @@ object ExtensionFunction
         this.visibility = View.VISIBLE
     }
 
-    public fun View.hide()
+     fun View.hide()
     {
         this.visibility = View.GONE
     }
 
+    fun AppCompatButton.enabled()
+    {
+        this.isEnabled = true
+    }
+
+
+    fun AppCompatButton.disabled()
+    {
+        this.isEnabled = false
+    }
 
 
     // extension function for Picasso
@@ -33,6 +48,7 @@ object ExtensionFunction
     {
         Picasso.get().load(url).into(this)
     }
+
 
     fun ImageView.load(url: String?, placeHolder: Int)
     {
@@ -64,11 +80,6 @@ object ExtensionFunction
     } // showToast closed
 
 
-    var str = "http://google.com"
-    var uri: URI = URI(str)
-    var url: URL = uri.toURL()
-
-    fun toUrl(url: String?) :URL =  URI(url).toURL()
 
 
 

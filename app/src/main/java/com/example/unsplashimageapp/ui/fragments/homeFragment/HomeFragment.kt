@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.unsplashimageapp.databinding.FragmentHomeBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.ImagesAdapter
 import com.example.unsplashimageapp.utils.Constants.TAG
-import com.example.unsplashimageapp.utils.ExtensionFunction
 import com.example.unsplashimageapp.utils.ExtensionFunction.hasInternetConnection
 import com.example.unsplashimageapp.utils.ExtensionFunction.hide
 import com.example.unsplashimageapp.utils.ExtensionFunction.show
-import com.example.unsplashimageapp.utils.ItemComparator
+import com.example.unsplashimageapp.utils.diffutil.ItemComparator
 import com.example.unsplashimageapp.viewmodel.MainViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -33,7 +32,7 @@ import java.util.*
 class HomeFragment : Fragment()
 {
 
-    var _binding:FragmentHomeBinding? =null
+    private var _binding:FragmentHomeBinding? =null
     private val binding get() = _binding!!
     private val viewModel:MainViewModel by viewModels()
     private val adapter:ImagesAdapter = ImagesAdapter(ItemComparator)
@@ -47,11 +46,11 @@ class HomeFragment : Fragment()
 
             setupRecyclerView(binding.recyclerViewFragmentHome)
 
-
         /** There are two Api call in Home Fragment     */
-        /* first gets the data on launch */
+        /* first gets the data when app  launched */
 
         binding.chipHomeFragAll.isChecked = true
+        binding.progressBarHomeFrag.show()
         getAllImages()
 
         /** Second call is triggered when a diff chip is checked */
@@ -67,7 +66,7 @@ class HomeFragment : Fragment()
 
     } // onCreateView closed
 
-    fun getQueryFromChip(group: ChipGroup?, selectedId: Int): String
+    private fun getQueryFromChip(group: ChipGroup?, selectedId: Int): String
     {
         val chip = group?.findViewById<Chip>(selectedId)
         return chip?.text.toString().toLowerCase(Locale.ROOT)
@@ -75,12 +74,13 @@ class HomeFragment : Fragment()
 
     private fun getSearchedResult(query: String)
     {
+        binding.progressBarHomeFrag.show()
        when(query == "all")
        {
-           true ->{
-               getAllImages() ; Timber.tag(TAG).d(query)
-           }
-           else -> { searchImages(query)  }
+
+           true -> getAllImages()
+
+           else ->  searchImages(query)
        } // when closed
 
     } // getSearchedResult
@@ -90,6 +90,7 @@ class HomeFragment : Fragment()
         if(!requireContext().hasInternetConnection())
         {
             binding.textViewNoInternet.show()
+            binding.progressBarHomeFrag.hide()
         }else
         {
             binding.textViewNoInternet.hide()
@@ -99,7 +100,7 @@ class HomeFragment : Fragment()
 
     private fun loadImagesIntoRecycler(query: String)
     {
-        binding.progressBarHomeFrag.show()
+
         Timber.tag(TAG).d(query)
         viewModel // to avoid observer on main thread Exception
         lifecycleScope.launch(Dispatchers.IO)
@@ -112,7 +113,6 @@ class HomeFragment : Fragment()
                     Timber.tag(TAG).d(""+it)
                     binding.progressBarHomeFrag.hide()
                     adapter.submitData(lifecycle,it)
-
                 } // withContext closed
             } // getAllImages
 
@@ -126,6 +126,7 @@ class HomeFragment : Fragment()
         if(!requireContext().hasInternetConnection())
         {
             binding.textViewNoInternet.show()
+            binding.progressBarHomeFrag.hide()
         }else
         {
             binding.textViewNoInternet.hide()
@@ -135,7 +136,6 @@ class HomeFragment : Fragment()
 
     private fun loadImagesIntoRecycler()
     {
-        binding.progressBarHomeFrag.show()
         viewModel // to avoid observer on main thread Exception
         lifecycleScope.launch(Dispatchers.IO)
         {
@@ -143,8 +143,8 @@ class HomeFragment : Fragment()
             {
                 withContext(Dispatchers.Main) // loadViews on main thread
                 {
-                    binding.progressBarHomeFrag.hide()
                     adapter.submitData(lifecycle,it)
+                    binding.progressBarHomeFrag.hide()
                 } // withContext closed
             } // getAllImages
 
