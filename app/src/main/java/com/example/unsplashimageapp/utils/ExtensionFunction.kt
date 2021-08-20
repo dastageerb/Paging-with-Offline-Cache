@@ -1,20 +1,18 @@
 package com.example.unsplashimageapp.utils
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Color.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
-import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
-import retrofit2.http.Url
-import java.net.URI
-import java.net.URL
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 object ExtensionFunction
@@ -79,10 +77,8 @@ object ExtensionFunction
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     } // showToast closed
 
-
-
-
-
+    fun Int.format() : String?
+    =  NumberFormat.getNumberInstance(Locale.US).format(this);
 
 
 

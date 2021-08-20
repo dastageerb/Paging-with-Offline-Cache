@@ -7,10 +7,13 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
+import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.repository.Repository
 import com.example.unsplashimageapp.utils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,6 +23,9 @@ class MainViewModel @Inject constructor(application: Application,private  val re
 {
 
     /** Getting List Responses */
+
+    val images:MutableStateFlow<NetworkResource<UnSplashResponseItem>> = MutableStateFlow(NetworkResource.Empty())
+
 
     fun getAllImages() = repository.remote.getPhotos()
 

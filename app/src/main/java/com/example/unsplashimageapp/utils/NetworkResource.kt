@@ -6,5 +6,6 @@ sealed class NetworkResource<T>
         class Loading<T>()  : NetworkResource<T>()
         class Success<T>(data: T?) : NetworkResource<T>(data)
         class Error<T>(message: String?,data: T?=null) : NetworkResource<T>(data,message)
+        class Empty<T>() : NetworkResource<T>()
 
 }
