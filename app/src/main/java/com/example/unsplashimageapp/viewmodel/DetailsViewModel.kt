@@ -1,25 +1,19 @@
 package com.example.unsplashimageapp.viewmodel
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
-import android.os.Environment
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
 import com.example.unsplashimageapp.data.repository.Repository
-import com.example.unsplashimageapp.utils.Constants.IMAGE_URL
-import com.example.unsplashimageapp.utils.Constants.TAG
 import com.example.unsplashimageapp.utils.ExtensionFunction.hasInternetConnection
 import com.example.unsplashimageapp.utils.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import okhttp3.ResponseBody
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import retrofit2.Response
-import timber.log.Timber
-import java.io.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,23 +23,26 @@ class DetailsViewModel @Inject constructor(
 ) : AndroidViewModel(application)
 {
 
-     fun getPhotoDetails(id: String)  = flow<NetworkResource<PhotoResponse>>()
+   private val _imagesDetailsResponse: MutableStateFlow<NetworkResource<PhotoResponse>> = MutableStateFlow(NetworkResource.Empty())
+   val imageDetailsResponse :StateFlow<NetworkResource<PhotoResponse>> get() = _imagesDetailsResponse
+
+     fun getPhotoDetails(id: String) = viewModelScope.launch (Dispatchers.IO)
     {
 
         if(getApplication<Application>().hasInternetConnection())
         {
-            emit(NetworkResource.Loading())
+            _imagesDetailsResponse.value = NetworkResource.Loading()
             try
             {
                 val response = repository.remote.getPhotoDetails(id)
-                emit(handleImageResponse(response))
+                _imagesDetailsResponse.value = handleImageResponse(response)
             }catch (e: Exception)
             {
-                emit(NetworkResource.Error(e.message))
+                _imagesDetailsResponse.value = NetworkResource.Error(e.message)
             } // catch closed
         }else
         {
-            emit(NetworkResource.Error("No Internet"))
+            _imagesDetailsResponse.value = NetworkResource.Error("No Internet")
         } // else closed
 
 

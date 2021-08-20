@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -56,12 +55,16 @@ class DetailsFragment : Fragment() , View.OnClickListener
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         loadViewFromSafeArgs()
-        getPhotoDetails();
+
+
+        detailsViewModel.getPhotoDetails(args.photoDetails.photoId.toString())
+
+        getPhotoDetailsResponse();
 
         binding.imageViewBack.setOnClickListener(this)
         binding.buttonDetailsFragDownload.setOnClickListener(this)
 
-        getDownloadResponse()
+      //  getDownloadResponse()
 
         return binding.root
     } // onCreateView closed
@@ -82,15 +85,14 @@ class DetailsFragment : Fragment() , View.OnClickListener
     } // loadViewsFromSafeArgs closed
 
 
-    private fun getPhotoDetails()
+    private fun getPhotoDetailsResponse()
     {
 
         detailsViewModel // declared before coroutine to avoid exception
         lifecycleScope.launch(Dispatchers.Main)
         {
-            detailsViewModel.getPhotoDetails(args.photoDetails.photoId.toString()).collect ()
+            detailsViewModel.imageDetailsResponse.collect ()
             {
-
                 when(it)
                 {
                     is NetworkResource.Success ->
@@ -111,7 +113,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
             } // collect closed
         } // lifecycle coroutine closed
 
-    } // getPhotoDetails closed
+    } // getPhotoDetailsResponse closed
 
     // load more Views from Api Response
     private fun loadViews(data: PhotoResponse)
@@ -121,7 +123,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
         {
             textViewDownloadsCount.text = data.downloads?.format()
             textViewViewsCount.text = data.views?.format()
-            textViewLocation.text = data.location?.country.toString()
+            textViewLocation.text =  data.location?.country ?: "unavailable"
             textViewCreationDate.text = data.createdAt?.substring(0,10)
             detailsLayout.show()
         } // apply closed
@@ -191,6 +193,9 @@ class DetailsFragment : Fragment() , View.OnClickListener
                     putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
                     requireContext().startService(this)
             } // intent closed
+
+            getDownloadResponse()
+
         } // downloadImage closed
 
 

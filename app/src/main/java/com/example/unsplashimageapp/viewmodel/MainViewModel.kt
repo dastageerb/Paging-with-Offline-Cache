@@ -24,7 +24,6 @@ class MainViewModel @Inject constructor(application: Application,private  val re
 
     /** Getting List Responses */
 
-    val images:MutableStateFlow<NetworkResource<UnSplashResponseItem>> = MutableStateFlow(NetworkResource.Empty())
 
 
     fun getAllImages() = repository.remote.getPhotos()

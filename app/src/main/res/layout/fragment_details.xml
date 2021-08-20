@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:text="12344556"
                 android:layout_below="@id/textDownloads"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="32dp"
                 android:textAlignment="center"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
@@ -150,40 +150,40 @@
                 android:id="@+id/textViewLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/location"
                 android:layout_below="@id/textViewDownloadsCount"
-                app:drawableLeftCompat="@drawable/ic_baseline_location_24"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:text="@string/location"
                 android:textSize="16sp"
-                />
+                app:drawableLeftCompat="@drawable/ic_baseline_location_24" />
 
             <TextView
                 android:id="@+id/textViewCreationDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/date"
                 android:layout_below="@id/textViewLocation"
-                app:drawableLeftCompat="@drawable/ic_baseline_uploaded_24"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:text="@string/date"
                 android:textSize="16sp"
-                />
+                app:drawableLeftCompat="@drawable/ic_baseline_uploaded_24" />
 
             <TextView
                 android:id="@+id/textViewLicence"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/license"
                 android:layout_below="@id/textViewCreationDate"
-                app:drawableLeftCompat="@drawable/ic_outline_licened_24"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:text="@string/license"
                 android:textSize="16sp"
-                />
+                app:drawableLeftCompat="@drawable/ic_outline_licened_24" />
 
 
             <androidx.appcompat.widget.AppCompatButton
