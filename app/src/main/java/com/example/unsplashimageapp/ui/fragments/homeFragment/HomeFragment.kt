@@ -5,15 +5,17 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.unsplashimageapp.databinding.FragmentHomeBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.ImagesAdapter
 import com.example.unsplashimageapp.utils.Constants.TAG
-import com.example.unsplashimageapp.utils.ExtensionFunction.hasInternetConnection
 import com.example.unsplashimageapp.utils.ExtensionFunction.hide
 import com.example.unsplashimageapp.utils.ExtensionFunction.show
+import com.example.unsplashimageapp.utils.NetworkResource
 import com.example.unsplashimageapp.utils.diffutil.ItemComparator
 import com.example.unsplashimageapp.viewmodel.MainViewModel
 import com.google.android.material.chip.Chip
@@ -28,6 +30,7 @@ import java.util.*
  * Dastageer
  * */
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment()
 {
@@ -35,7 +38,7 @@ class HomeFragment : Fragment()
     private var _binding:FragmentHomeBinding? =null
     private val binding get() = _binding!!
     private val viewModel:MainViewModel by viewModels()
-    private val adapter:ImagesAdapter = ImagesAdapter(ItemComparator)
+    private val  adapter = ImagesAdapter(ItemComparator)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -44,14 +47,14 @@ class HomeFragment : Fragment()
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-            setupRecyclerView(binding.recyclerViewFragmentHome)
+        setupRecyclerView(binding.recyclerViewFragmentHome)
 
         /** There are two Api call in Home Fragment     */
         /* first gets the data when app  launched */
-
         binding.chipHomeFragAll.isChecked = true
-        binding.progressBarHomeFrag.show()
-        getAllImages()
+        viewModel.requestPhotos()
+
+
 
         /** Second call is triggered when a diff chip is checked */
         /* chip text is used as query */
@@ -59,12 +62,54 @@ class HomeFragment : Fragment()
         {
                 group,selectedId ->
                 val query = getQueryFromChip(group,selectedId)
-                getSearchedResult(query)
+                makeASearchRequest(query)
         }
+
+
+        //
+        subscribeResponseFlow()
 
         return binding.root
 
     } // onCreateView closed
+
+
+
+    private fun subscribeResponseFlow()
+    {
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
+        {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.getResponse.collect()
+                {
+                    when(it)
+                    {
+                        is NetworkResource.Loading ->
+                        {
+                            binding.progressBarHomeFrag.show()
+                            Timber.tag(TAG).d("Data in Home Frag Loading")
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            binding.progressBarHomeFrag.hide()
+                            Timber.tag(TAG).d("Data in Home Frag Error")
+                        }
+                        is NetworkResource.Success ->
+                        {
+                            binding.progressBarHomeFrag.hide()
+                           adapter.submitData(lifecycle,it.data!!)
+                            Timber.tag(TAG).d("Data in Home Frag Success")
+                        }
+                        else -> {
+                            Timber.tag(TAG).d("Data in Home Frag Else")}
+                    } // when closed
+                } // collect closed
+            } // repeatOnLifeCycle closed
+        }  // viewLifecycleOwner closed
+
+    } // subscribeResponseFlow closed
 
     private fun getQueryFromChip(group: ChipGroup?, selectedId: Int): String
     {
@@ -72,85 +117,16 @@ class HomeFragment : Fragment()
         return chip?.text.toString().toLowerCase(Locale.ROOT)
     }
 
-    private fun getSearchedResult(query: String)
+    private fun makeASearchRequest(query: String)
     {
         binding.progressBarHomeFrag.show()
        when(query == "all")
        {
-
-           true -> getAllImages()
-
-           else ->  searchImages(query)
+           true -> viewModel.requestPhotos()
+           else ->  viewModel.requestPhotos(query)
        } // when closed
-
     } // getSearchedResult
 
-    private fun searchImages(query: String)
-    {
-        if(!requireContext().hasInternetConnection())
-        {
-            binding.textViewNoInternet.show()
-            binding.progressBarHomeFrag.hide()
-        }else
-        {
-            binding.textViewNoInternet.hide()
-            loadImagesIntoRecycler(query)
-        } // else closed
-    } // searchImages closed
-
-    private fun loadImagesIntoRecycler(query: String)
-    {
-
-        Timber.tag(TAG).d(query)
-        viewModel // to avoid observer on main thread Exception
-        lifecycleScope.launch(Dispatchers.IO)
-        {
-            viewModel.getSearchedImages(query).collect()
-            {
-
-                withContext(Dispatchers.Main) // loadViews on main thread
-                {
-                    Timber.tag(TAG).d(""+it)
-                    binding.progressBarHomeFrag.hide()
-                    adapter.submitData(lifecycle,it)
-                } // withContext closed
-            } // getAllImages
-
-        } // coroutine closed
-
-    } // loadAllImagesIntoRecycler
-
-
-    private fun getAllImages()
-    {
-        if(!requireContext().hasInternetConnection())
-        {
-            binding.textViewNoInternet.show()
-            binding.progressBarHomeFrag.hide()
-        }else
-        {
-            binding.textViewNoInternet.hide()
-            loadImagesIntoRecycler();
-        } // else closed
-    } // getAllImages closed
-
-    private fun loadImagesIntoRecycler()
-    {
-        viewModel // to avoid observer on main thread Exception
-        lifecycleScope.launch(Dispatchers.IO)
-        {
-            viewModel.getAllImages().collect()
-            {
-                withContext(Dispatchers.Main) // loadViews on main thread
-                {
-                    adapter.submitData(lifecycle,it)
-                    binding.progressBarHomeFrag.hide()
-                } // withContext closed
-            } // getAllImages
-
-        } // coroutine closed
-
-    } // loadAllImagesIntoRecycler
 
 
     private fun setupRecyclerView(recycler: RecyclerView)

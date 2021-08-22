@@ -7,7 +7,7 @@ import com.example.unsplashimageapp.data.api.UnSplashApi
 import retrofit2.HttpException
 import java.io.IOException
 
-class UnSplashAllPagingSource(private val api:UnSplashApi, private val query:String? = null) : PagingSource<Int, UnSplashResponseItem>()
+class UnSplashAllPagingSource(private val api:UnSplashApi) : PagingSource<Int, UnSplashResponseItem>()
 {
 
     override fun getRefreshKey(state: PagingState<Int, UnSplashResponseItem>): Int?
@@ -28,18 +28,12 @@ class UnSplashAllPagingSource(private val api:UnSplashApi, private val query:Str
         return try
         {
 
-
-
              val  response  = api.getPhotos(page,params.loadSize)
-
-
-
 
             LoadResult.Page(
                 data = response.body()!!,
                 prevKey = if(page==1) null else page-1,
-                nextKey = if(response.body().isNullOrEmpty()) null else page+1
-            )
+                nextKey = if(response.body().isNullOrEmpty()) null else page+1)
 
         }catch (e: IOException)
         {
@@ -48,15 +42,6 @@ class UnSplashAllPagingSource(private val api:UnSplashApi, private val query:Str
         {
             LoadResult.Error(e)
         }
-
-
-
-
-
-
-
-
-
 
     } // load closed
 

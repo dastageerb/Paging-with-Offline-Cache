@@ -46,7 +46,7 @@ class DetailsViewModel @Inject constructor(
         } // else closed
 
 
-    } // getSinglePhoto closed
+    } // getPhotoDetails closed
 
 
     private fun handleImageResponse(response: Response<PhotoResponse>): NetworkResource<PhotoResponse>

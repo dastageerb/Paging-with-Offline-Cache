@@ -89,7 +89,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
     {
 
         detailsViewModel // declared before coroutine to avoid exception
-        lifecycleScope.launch(Dispatchers.Main)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
             detailsViewModel.imageDetailsResponse.collect ()
             {
@@ -193,9 +193,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
                     putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
                     requireContext().startService(this)
             } // intent closed
-
             getDownloadResponse()
-
         } // downloadImage closed
 
 
@@ -205,7 +203,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
         {
 
             // response from download service
-            lifecycleScope.launch()
+            viewLifecycleOwner.lifecycleScope.launch()
             {
                 DownloadService.downloadingStatus.collect ()
                 {

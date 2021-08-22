@@ -18,6 +18,7 @@ interface UnSplashApi
     ) : Response<List<UnSplashResponseItem>>
 
 
+
     @GET("search/photos")
     suspend fun searchPhotos(
         @Query("query") query: String,

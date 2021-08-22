@@ -149,7 +149,9 @@
         android:text="No Internet Connection"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:drawableTopCompat="@drawable/ic_baseline_no_internet_24" />
+        app:drawableTopCompat="@drawable/ic_baseline_no_internet_24"
+        android:visibility="gone"
+        />
 
     <ProgressBar
         android:id="@+id/progressBarHomeFrag"

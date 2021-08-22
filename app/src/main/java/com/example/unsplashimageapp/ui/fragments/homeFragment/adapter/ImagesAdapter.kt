@@ -1,5 +1,6 @@
 package com.example.unsplashimageapp.ui.fragments.homeFragment.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -13,13 +14,16 @@ import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
 import com.example.unsplashimageapp.utils.ExtensionFunction.load
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
+class ImagesAdapter (diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
     : PagingDataAdapter<UnSplashResponseItem,ImagesAdapter.ViewHolder>(diffUtil)
 {
 
-    inner  class  ViewHolder(binding: LayoutRecylerImageItemsBinding) : RecyclerView.ViewHolder(binding.root)
 
+
+    inner  class  ViewHolder(binding: LayoutRecylerImageItemsBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -34,7 +38,6 @@ class ImagesAdapter(diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
         val item = getItem(position)
         LayoutRecylerImageItemsBinding.bind(holder.itemView).apply ()
         {
-
             imageViewRecyclerImageItems.load(item?.urls?.small)
         }
 
