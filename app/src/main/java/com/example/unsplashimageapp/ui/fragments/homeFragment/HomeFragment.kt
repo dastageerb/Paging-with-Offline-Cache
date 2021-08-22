@@ -119,7 +119,7 @@ class HomeFragment : Fragment()
 
     private fun makeASearchRequest(query: String)
     {
-        binding.progressBarHomeFrag.show()
+
        when(query == "all")
        {
            true -> viewModel.requestPhotos()
