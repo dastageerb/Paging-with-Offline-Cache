@@ -15,16 +15,10 @@ class RemoteDataSource @Inject constructor(private val api:UnSplashApi)
 
 
     /** Home Fragment api call */
-     fun getAllPhotos() = Pager(PagingConfig(20))
-    {
-        UnSplashAllPagingSource(api)
-    }.flow
+     fun getAllPhotos() = Pager(PagingConfig(20)) { UnSplashAllPagingSource(api) }.flow
 
 
-    fun searchPhotos(query:String) = Pager(PagingConfig(20))
-    {
-        UnSplashSearchPagingSource(api,query)
-    }.flow
+    fun searchPhotos(query:String) = Pager(PagingConfig(20)) { UnSplashSearchPagingSource(api,query) }.flow
 
 
     /** Details Fragment api call */

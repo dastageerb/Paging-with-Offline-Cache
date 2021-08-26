@@ -45,7 +45,6 @@ class DetailsViewModel @Inject constructor(
             _imagesDetailsResponse.value = NetworkResource.Error("No Internet")
         } // else closed
 
-
     } // getPhotoDetails closed
 
 

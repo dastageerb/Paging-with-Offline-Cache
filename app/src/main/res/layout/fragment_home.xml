@@ -160,7 +160,6 @@
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/heavyGrey"
         android:layout_centerInParent="true"
-        android:visibility="gone"
         />
 
 

@@ -27,12 +27,18 @@ class MainViewModel @Inject constructor(application: Application,private  val re
     /** Search All photos request */
     fun requestPhotos() = viewModelScope.launch(Dispatchers.IO)
     {
-
+        _getResponse.value = NetworkResource.Loading()
         if (getApplication<Application>().hasInternetConnection())
         {
-            _getResponse.value = NetworkResource.Loading()
+
            val response =  repository.remote.getAllPhotos().cachedIn(viewModelScope)
-            response.collect()
+
+            response.catch()
+            {
+                exception ->
+                _getResponse.value = NetworkResource.Error(exception.message)
+            }
+                .collect()
             {
                     _getResponse.value  = NetworkResource.Success(it)
             } // collect closed
@@ -49,10 +55,9 @@ class MainViewModel @Inject constructor(application: Application,private  val re
 
     fun requestPhotos(query:String) = viewModelScope.launch(Dispatchers.IO)
     {
-
+        _getResponse.value = NetworkResource.Loading()
         if (getApplication<Application>().hasInternetConnection())
         {
-            _getResponse.value = NetworkResource.Loading()
             val response =  repository.remote.searchPhotos(query).cachedIn(viewModelScope)
             response.collect()
             {

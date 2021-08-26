@@ -1,6 +1,7 @@
 package com.example.unsplashimageapp.utils
 
 import android.content.Context
+import android.icu.number.NumberFormatter.with
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -9,8 +10,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -43,9 +45,25 @@ object ExtensionFunction
 
     // extension function for Picasso
 
-    fun ImageView.load(url: String?)
+//    fun ImageView.load(url: String?)
+//    {
+//        Picasso.get().load(url).noFade().into(this)
+//    }
+
+    fun ImageView.load(url:String?,)
     {
-        Picasso.get().load(url).into(this)
+        Picasso.get().load(url)
+            .into(this, object : Callback
+            {
+                override fun onSuccess()
+                {
+                }
+                override fun onError(e: Exception?)
+                {
+
+                }
+            })
+
     }
 
 

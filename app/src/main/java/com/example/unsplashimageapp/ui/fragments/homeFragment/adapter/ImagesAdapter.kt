@@ -3,6 +3,7 @@ package com.example.unsplashimageapp.ui.fragments.homeFragment.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -12,16 +13,19 @@ import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.Entity.safeArgsObject.ImageDetails
 import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
+import com.example.unsplashimageapp.utils.ExtensionFunction.hide
 import com.example.unsplashimageapp.utils.ExtensionFunction.load
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.lang.Exception
 import javax.inject.Inject
 
 class ImagesAdapter (diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
     : PagingDataAdapter<UnSplashResponseItem,ImagesAdapter.ViewHolder>(diffUtil)
 {
 
-
+    var progressbar:ProgressBar? = null
 
     inner  class  ViewHolder(binding: LayoutRecylerImageItemsBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -36,9 +40,27 @@ class ImagesAdapter (diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         val item = getItem(position)
+
+
+
         LayoutRecylerImageItemsBinding.bind(holder.itemView).apply ()
         {
-            imageViewRecyclerImageItems.load(item?.urls?.small)
+//            imageViewRecyclerImageItems.load(item?.urls?.small)
+
+            Picasso.get().load(item?.urls?.small)
+                .into(imageViewRecyclerImageItems, object : Callback
+                {
+                    override fun onSuccess()
+                    {
+                        progressbar?.hide()
+                    }
+                    override fun onError(e: Exception?)
+                    {
+                        progressbar?.hide()
+                    }
+                })
+
+
         }
 
         holder.itemView.setOnClickListener()

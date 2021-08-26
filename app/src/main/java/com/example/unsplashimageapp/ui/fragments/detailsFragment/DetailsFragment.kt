@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.unsplashimageapp.R
@@ -88,29 +90,32 @@ class DetailsFragment : Fragment() , View.OnClickListener
     private fun getPhotoDetailsResponse()
     {
 
-        detailsViewModel // declared before coroutine to avoid exception
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main)
         {
-            detailsViewModel.imageDetailsResponse.collect ()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)
             {
-                when(it)
+                detailsViewModel.imageDetailsResponse.collect ()
                 {
-                    is NetworkResource.Success ->
+                    when(it)
                     {
-                        binding.progressBarDetailsFrag.hide()
-                        loadViews(it.data!!)
-                        Timber.tag(TAG).d("Success -> %s", it.data)
-                    }
-                    is NetworkResource.Error ->
-                    {
-                        binding.progressBarDetailsFrag.hide()
-                        requireContext().showToast(it.message.toString())
-                        Timber.tag(TAG).d("Error -> %s", it.message)
-                    }
-                    is NetworkResource.Loading -> binding.progressBarDetailsFrag.show()
-                } // when closed
+                        is NetworkResource.Success ->
+                        {
+                            binding.progressBarDetailsFrag.hide()
+                            loadViews(it.data!!)
+                            Timber.tag(TAG).d("Success -> %s", it.data)
+                        }
+                        is NetworkResource.Error ->
+                        {
+                            binding.progressBarDetailsFrag.hide()
+                            requireContext().showToast(it.message.toString())
+                            Timber.tag(TAG).d("Error -> %s", it.message)
+                        }
+                        is NetworkResource.Loading -> binding.progressBarDetailsFrag.show()
+                        else -> {}
+                    } // when closed
 
-            } // collect closed
+                } // collect closed
+            } // repeatOnLifecycle closed
         } // lifecycle coroutine closed
 
     } // getPhotoDetailsResponse closed
@@ -141,7 +146,10 @@ class DetailsFragment : Fragment() , View.OnClickListener
             }
             R.id.imageViewBack ->
             {
-                findNavController().navigate(R.id.action_detailsFragment_to_homeFragment)
+               // findNavController().navigate(R.id.action_detailsFragment_to_homeFragment)
+
+                findNavController().popBackStack()
+
             }
         } // when closed
     } // onClick closed
@@ -153,13 +161,14 @@ class DetailsFragment : Fragment() , View.OnClickListener
         when(hasPermission(requireContext()))
         {
             true -> startDownloading()
-            else -> if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P)
-            {
-                mPermissionResult.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.FOREGROUND_SERVICE))
-            }else
-            {
-                mPermissionResult.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            }
+            else ->
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P)
+                {
+                    mPermissionResult.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.FOREGROUND_SERVICE))
+                }else
+                {
+                    mPermissionResult.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                }
         } // when closed
     } // checkPermissionAndDownload
 
@@ -193,7 +202,9 @@ class DetailsFragment : Fragment() , View.OnClickListener
                     putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
                     requireContext().startService(this)
             } // intent closed
+
             getDownloadResponse()
+
         } // downloadImage closed
 
 
@@ -205,7 +216,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
             // response from download service
             viewLifecycleOwner.lifecycleScope.launch()
             {
-                DownloadService.downloadingStatus.collect ()
+                DownloadService.downloadingStatus.collect()
                 {
                     when(it)
                     {
@@ -225,7 +236,6 @@ class DetailsFragment : Fragment() , View.OnClickListener
                             requireContext().showToast("Downloading ...")
                             binding.buttonDetailsFragDownload.disabled()
                         } // Loading closed
-
                         else -> { /* do nothing */ }
                     } // when closed
 

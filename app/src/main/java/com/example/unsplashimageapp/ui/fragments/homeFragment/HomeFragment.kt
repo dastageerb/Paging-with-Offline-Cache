@@ -2,8 +2,8 @@ package com.example.unsplashimageapp.ui.fragments.homeFragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,19 +12,22 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.unsplashimageapp.databinding.FragmentHomeBinding
 import com.example.unsplashimageapp.ui.fragments.homeFragment.adapter.ImagesAdapter
-import com.example.unsplashimageapp.utils.Constants.TAG
 import com.example.unsplashimageapp.utils.ExtensionFunction.hide
 import com.example.unsplashimageapp.utils.ExtensionFunction.show
+import com.example.unsplashimageapp.utils.ExtensionFunction.showToast
 import com.example.unsplashimageapp.utils.NetworkResource
 import com.example.unsplashimageapp.utils.diffutil.ItemComparator
 import com.example.unsplashimageapp.viewmodel.MainViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
+import java.lang.Exception
 import java.util.*
+
 
 /** @author
  * Dastageer
@@ -43,10 +46,11 @@ class HomeFragment : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
+        binding.recyclerViewFragmentHome.hide()
         setupRecyclerView(binding.recyclerViewFragmentHome)
 
         /** There are two Api call in Home Fragment     */
@@ -59,9 +63,8 @@ class HomeFragment : Fragment()
         /** Second call is triggered when a diff chip is checked */
         /* chip text is used as query */
         binding.chipGroupHomeFrag.setOnCheckedChangeListener()
-        {
-                group,selectedId ->
-                val query = getQueryFromChip(group,selectedId)
+        { group, selectedId ->
+                val query = getQueryFromChip(group, selectedId)
                 makeASearchRequest(query)
         }
 
@@ -89,21 +92,18 @@ class HomeFragment : Fragment()
                         is NetworkResource.Loading ->
                         {
                             binding.progressBarHomeFrag.show()
-                            Timber.tag(TAG).d("Data in Home Frag Loading")
                         }
                         is NetworkResource.Error ->
                         {
                             binding.progressBarHomeFrag.hide()
-                            Timber.tag(TAG).d("Data in Home Frag Error")
+                            requireContext().showToast(it.message.toString())
                         }
                         is NetworkResource.Success ->
                         {
-                            binding.progressBarHomeFrag.hide()
-                           adapter.submitData(lifecycle,it.data!!)
-                            Timber.tag(TAG).d("Data in Home Frag Success")
+                            adapter.submitData(lifecycle, it.data!!)
+                            binding.recyclerViewFragmentHome.show()
                         }
-                        else -> {
-                            Timber.tag(TAG).d("Data in Home Frag Else")}
+                        else -> { }
                     } // when closed
                 } // collect closed
             } // repeatOnLifeCycle closed
@@ -132,8 +132,10 @@ class HomeFragment : Fragment()
     private fun setupRecyclerView(recycler: RecyclerView)
     {
         recycler.setHasFixedSize(true)
-        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+        recycler.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         recycler.adapter = adapter
+        // for ui state management
+        adapter.progressbar = binding.progressBarHomeFrag
 
 //            .withLoadStateHeaderAndFooter(header = LoadingStateAdapter{adapter.retry()}
 //        ,footer = LoadingStateAdapter{adapter.retry()}
@@ -143,14 +145,14 @@ class HomeFragment : Fragment()
 
 
 
-
-
     override fun onDestroyView()
     {
         super.onDestroyView()
         _binding = null
 
     } // OnDestroyView closed
+
+
 
 
 
