@@ -1,7 +1,6 @@
-package com.example.unsplashimageapp.di.module
+package com.example.unsplashimageapp.di
 
 
-import com.example.unsplashimageapp.BuildConfig
 import com.example.unsplashimageapp.data.api.UnSplashApi
 import dagger.Module
 import dagger.Provides
@@ -9,7 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -25,18 +23,16 @@ object NetworkModule
     @Singleton
     @Provides
     fun providesIntercepton() : Interceptor =
-        object :Interceptor
-        {
-            override fun intercept(chain: Interceptor.Chain): Response =
-                chain.run{
-                    proceed(
-                        request()
+        Interceptor { chain ->
+            chain.run{
+                proceed(
+                    request()
                         .newBuilder()
-                            .addHeader("Accept-Version","v1")
-                            .addHeader("Authorization","Client-ID XrgZaFt9EF1Fnn5j4kRwtKyl8VwSpkHf2_Abo0PBSRA")
-                            .build()
-                    )
-                }
+                        .addHeader("Accept-Version","v1")
+                        .addHeader("Authorization","Client-ID XrgZaFt9EF1Fnn5j4kRwtKyl8VwSpkHf2_Abo0PBSRA")
+                        .build()
+                )
+            }
         }
 
     @Singleton

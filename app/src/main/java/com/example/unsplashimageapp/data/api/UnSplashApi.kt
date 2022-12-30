@@ -1,12 +1,8 @@
 package com.example.unsplashimageapp.data.api
 
-import com.example.unsplashimageapp.data.Entity.responses.PhotoResponse
-import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
-import com.example.unsplashimageapp.data.Entity.responses.UnSplashSearchResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
-import java.net.URL
 
 interface UnSplashApi
 {
@@ -15,7 +11,7 @@ interface UnSplashApi
     suspend fun getPhotos(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ) : Response<List<UnSplashResponseItem>>
+    ) : Response<List<Any>>
 
 
 
@@ -24,12 +20,12 @@ interface UnSplashApi
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ) : Response<UnSplashSearchResponse>
+    ) : Response<Any>
 
 
     // // getSinglePhoto  = photo Details
     @GET("/photos/{id}")
-    suspend fun getPhotoDetails(@Path("id")id:String) : Response<PhotoResponse>
+    suspend fun getPhotoDetails(@Path("id")id:String) : Response<Any>
 
 
     @GET

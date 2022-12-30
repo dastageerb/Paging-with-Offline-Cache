@@ -1,23 +1,13 @@
-package com.example.unsplashimageapp.ui
+package com.example.unsplashimageapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.example.unsplashimageapp.BuildConfig
-import com.example.unsplashimageapp.utils.Constants.TAG
 import com.example.unsplashimageapp.R
-import com.example.unsplashimageapp.data.api.UnSplashApi
 import com.example.unsplashimageapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import timber.log.Timber.DebugTree
-import javax.inject.Inject
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint

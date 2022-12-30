@@ -1,4 +1,4 @@
-package com.example.unsplashimageapp.di.base
+package com.example.unsplashimageapp.base
 
 import android.app.Application
 import com.example.unsplashimageapp.BuildConfig
@@ -9,17 +9,12 @@ import timber.log.Timber
 class BaseApp : Application()
 {
 
-    override fun onCreate()
-    {
+    override fun onCreate() {
         super.onCreate()
-
-        if (BuildConfig.DEBUG)
-        {
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
     }
-
 }
 
 

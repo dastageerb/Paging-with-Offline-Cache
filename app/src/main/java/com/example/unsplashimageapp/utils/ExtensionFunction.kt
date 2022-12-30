@@ -18,88 +18,30 @@ import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-object ExtensionFunction
+open class ExtensionFunction
 {
-
-    public fun View.show()
-    {
+    public fun View.show() {
         this.visibility = View.VISIBLE
     }
 
-     fun View.hide()
-    {
+    fun View.hide() {
         this.visibility = View.GONE
     }
 
-    fun AppCompatButton.enabled()
-    {
+    fun AppCompatButton.enabled() {
         this.isEnabled = true
     }
 
-
-    fun AppCompatButton.disabled()
-    {
+    fun AppCompatButton.disabled() {
         this.isEnabled = false
     }
 
-
-    // extension function for Picasso
-
-//    fun ImageView.load(url: String?)
-//    {
-//        Picasso.get().load(url).noFade().into(this)
-//    }
-
-    fun ImageView.load(url:String?,)
-    {
-        Picasso.get().load(url)
-            .into(this, object : Callback
-            {
-                override fun onSuccess()
-                {
-                }
-                override fun onError(e: Exception?)
-                {
-
-                }
-            })
-
-    }
-
-
-    fun ImageView.load(url: String?, placeHolder: Int)
-    {
+    fun ImageView.load(url: String?, placeHolder: Int) {
         Picasso.get().load(url).placeholder(placeHolder).into(this)
     }
 
-
-    // check internet connection
-    fun Context.hasInternetConnection() : Boolean
-    {
-        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
-                as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-
-        return when
-        {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)-> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            else -> false
-        } // return When closed
-    } // hasInternetConnection
-
-
-    fun Context.showToast(msg: String)
-    {
+    fun Context.showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     } // showToast closed
-
-    fun Int.format() : String?
-    =  NumberFormat.getNumberInstance(Locale.US).format(this);
-
-
-
 
 }  // ExtensionFunctions closed
