@@ -49,7 +49,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
     private var _binding:FragmentDetailsBinding?=null
     private val binding get() = _binding!!
     private val detailsViewModel:DetailsViewModel by viewModels()
-    private val args by navArgs<DetailsFragmentArgs>()
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -58,8 +58,8 @@ class DetailsFragment : Fragment() , View.OnClickListener
 
         loadViewFromSafeArgs()
 
-
-        detailsViewModel.getPhotoDetails(args.photoDetails.photoId.toString())
+//
+//        detailsViewModel.getPhotoDetails(args.photoDetails.photoId.toString())
 
         getPhotoDetailsResponse();
 
@@ -78,10 +78,10 @@ class DetailsFragment : Fragment() , View.OnClickListener
         {
             detailsLayout.hide()
             progressBarDetailsFrag.show()
-            textViewUserName.text = args.photoDetails.username
-            textViewDescription.text = args.photoDetails.description
-            imageViewDetailsFrag.load(args.photoDetails.imageUrl,R.drawable.ic_baseline_place_holder_24)
-            imageViewUser.load(args.photoDetails.userImageUrl,R.drawable.ic_baseline_person_24)
+//            textViewUserName.text = args.photoDetails.username
+//            textViewDescription.text = args.photoDetails.description
+//            imageViewDetailsFrag.load(args.photoDetails.imageUrl,R.drawable.ic_baseline_place_holder_24)
+//            imageViewUser.load(args.photoDetails.userImageUrl,R.drawable.ic_baseline_person_24)
         } // apply closed
 
     } // loadViewsFromSafeArgs closed
@@ -199,7 +199,7 @@ class DetailsFragment : Fragment() , View.OnClickListener
             // Start Download service
             Intent(context, DownloadService::class.java).apply ()
             {
-                    putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
+//                    putExtra(Constants.IMAGE_URL,args.photoDetails.downloadUrl)
                     requireContext().startService(this)
             } // intent closed
 

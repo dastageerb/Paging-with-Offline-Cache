@@ -55,7 +55,7 @@ object NetworkModule
     @Provides
     fun provideRetrofitClient (okHttpClient: OkHttpClient) : Retrofit
     = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
+        .baseUrl("")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()

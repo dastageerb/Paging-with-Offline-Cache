@@ -1,25 +1,18 @@
 package com.example.unsplashimageapp.ui.fragments.homeFragment.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.unsplashimageapp.R
 import com.example.unsplashimageapp.data.Entity.responses.UnSplashResponseItem
 import com.example.unsplashimageapp.data.Entity.safeArgsObject.ImageDetails
 import com.example.unsplashimageapp.databinding.LayoutRecylerImageItemsBinding
-import com.example.unsplashimageapp.ui.fragments.homeFragment.HomeFragmentDirections
 import com.example.unsplashimageapp.utils.ExtensionFunction.hide
-import com.example.unsplashimageapp.utils.ExtensionFunction.load
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.lang.Exception
-import javax.inject.Inject
 
 class ImagesAdapter (diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
     : PagingDataAdapter<UnSplashResponseItem,ImagesAdapter.ViewHolder>(diffUtil)
@@ -73,8 +66,10 @@ class ImagesAdapter (diffUtil: DiffUtil.ItemCallback<UnSplashResponseItem>)
                 item?.links?.download,
                 item?.altDescription
             )
-            val action  = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(imageDetails)
-            holder.itemView.findNavController().navigate(action)
+
+//            val action  = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(imageDetails)
+//            holder.itemView.findNavController().navigate(action)
+//
         } // itemView click listener closed
 
 
