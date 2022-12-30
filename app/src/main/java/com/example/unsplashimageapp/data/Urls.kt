@@ -6,8 +6,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Urls(
-    @Json(name = "regular")
-    val regular: String?,
     @Json(name = "thumb")
     val thumb: String?
 )

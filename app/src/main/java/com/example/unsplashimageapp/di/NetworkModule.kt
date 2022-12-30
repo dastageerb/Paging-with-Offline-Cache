@@ -1,6 +1,7 @@
 package com.example.unsplashimageapp.di
 
 
+import com.example.unsplashimageapp.BuildConfig
 import com.example.unsplashimageapp.data.api.UnSplashApi
 import dagger.Module
 import dagger.Provides
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule
+class NetworkModule
 {
 
 
@@ -29,7 +30,6 @@ object NetworkModule
                     request()
                         .newBuilder()
                         .addHeader("Accept-Version","v1")
-                        .addHeader("Authorization","Client-ID XrgZaFt9EF1Fnn5j4kRwtKyl8VwSpkHf2_Abo0PBSRA")
                         .build()
                 )
             }
@@ -59,6 +59,5 @@ object NetworkModule
     @Singleton
     @Provides
     fun provideUnSplashApi(retrofit: Retrofit) : UnSplashApi = retrofit.create(UnSplashApi::class.java)
-
 
 }

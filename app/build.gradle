@@ -118,5 +118,10 @@ dependencies {
     // Timber for logs
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
+    // room
+    implementation "androidx.room:room-runtime:2.4.3"
+    implementation "androidx.room:room-ktx:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+
 }
 
