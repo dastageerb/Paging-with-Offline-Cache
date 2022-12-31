@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.unsplashimageapp.data.local.ImagesDatabase
 import com.example.unsplashimageapp.data.Image
+import com.example.unsplashimageapp.data.local.ImageDbEntity
 import com.example.unsplashimageapp.data.local.RemoteKey
 import com.example.unsplashimageapp.utils.Constants.STARTING_PAGE_INDEX
 import com.example.unsplashimageapp.utils.Mappers.mapNetWorkEntityIntoDatabaseEntity
@@ -17,14 +18,14 @@ import retrofit2.HttpException
 class ImagesRemoteMediator(
     private val api: ImagesApi,
     private val db: ImagesDatabase
-) : RemoteMediator<Int, Image>() {
+) : RemoteMediator<Int, ImageDbEntity>() {
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
     override suspend fun load(
-        loadType: LoadType, state: PagingState<Int, Image>
+        loadType: LoadType, state: PagingState<Int, ImageDbEntity>
     ): MediatorResult {
         val pageKeyData = getKeyPageData(loadType, state)
         val page = when (pageKeyData) {
@@ -60,7 +61,7 @@ class ImagesRemoteMediator(
         }
     }
 
-    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, Image>): Any {
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, ImageDbEntity>): Any {
         return when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -81,7 +82,7 @@ class ImagesRemoteMediator(
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Image>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ImageDbEntity>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
                 db.getKeysDao().remoteKeysImageId(repoId)
@@ -89,14 +90,14 @@ class ImagesRemoteMediator(
         }
     }
 
-    private suspend fun getLastRemoteKey(state: PagingState<Int, Image>): RemoteKey? {
+    private suspend fun getLastRemoteKey(state: PagingState<Int, ImageDbEntity>): RemoteKey? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
             ?.let { image -> db.getKeysDao().remoteKeysImageId(image.id!!) }
     }
 
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, Image>): RemoteKey? {
+    private suspend fun getFirstRemoteKey(state: PagingState<Int, ImageDbEntity>): RemoteKey? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()

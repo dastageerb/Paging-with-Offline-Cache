@@ -14,24 +14,18 @@ private const val PAGE_SIZE = 30
 class ImagesRepository @Inject constructor(
     private val imageApi: ImagesApi,
     private val database: ImagesDatabase,
-    private val coroutineScope: CoroutineScope
 ) {
 
-    suspend fun getQuotes() = Pager(
-        config = PagingConfig(
-            pageSize = 20,
-            maxSize = 100
-        ),
-        remoteMediator = ImagesRemoteMediator(imageApi, database),
-        pagingSourceFactory = { database.getImagesDao().getAll() }
-    ).flow.cachedIn(coroutineScope)
+    fun getAllImages(): Flow<PagingData<ImageDbEntity>> {
+        val pagingSourceFactory = { database.getImagesDao().getAll() }
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE, initialLoadSize =
+                PAGE_SIZE * 2
+            ),
+            remoteMediator = ImagesRemoteMediator(imageApi,database),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
 
-//    suspend fun fillWithDummyCats(dummyCats: List<Image>) {
-//        database.getImagesDao().deleteAll()
-//        database.getImagesDao().insertAll(dummyCats)
-//    }
-
-//    suspend fun deleteDummyData() {
-//        database.getCatDao().deleteAll()
-//    }
 }
