@@ -2,8 +2,8 @@ package com.c_od_e.pagination.di
 
 import android.content.Context
 import androidx.room.Room
-import com.c_od_e.pagination.db.CatDatabase
-import com.c_od_e.pagination.db.ImagesDatabase
+import com.example.unsplashimageapp.data.local.ImagesDatabase
+import com.example.unsplashimageapp.utils.Constants.IMAGES_DB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,12 +13,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DbModule {
+class DbModule {
     @Provides
     @Singleton
     fun provideDb(
         @ApplicationContext appContext: Context
-    ): CatDatabase {
+    ): ImagesDatabase {
         return Room.databaseBuilder(
             appContext, ImagesDatabase::class.java,
             IMAGES_DB

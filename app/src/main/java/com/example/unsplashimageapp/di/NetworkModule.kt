@@ -1,8 +1,7 @@
 package com.example.unsplashimageapp.di
 
 
-import com.example.unsplashimageapp.BuildConfig
-import com.example.unsplashimageapp.data.api.UnSplashApi
+import com.example.unsplashimageapp.data.api.ImagesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,6 +57,6 @@ class NetworkModule
 
     @Singleton
     @Provides
-    fun provideUnSplashApi(retrofit: Retrofit) : UnSplashApi = retrofit.create(UnSplashApi::class.java)
+    fun provideUnSplashApi(retrofit: Retrofit) : ImagesApi = retrofit.create(ImagesApi::class.java)
 
 }

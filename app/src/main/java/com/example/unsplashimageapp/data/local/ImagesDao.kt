@@ -1,22 +1,23 @@
-package com.c_od_e.pagination.db
+package com.example.unsplashimageapp.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.c_od_e.pagination.model.Cat
 import com.example.unsplashimageapp.utils.Constants
+import com.example.unsplashimageapp.utils.Constants.IMAGES_TABLE
+
 
 @Dao
 interface ImagesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(cats: List<Cat>)
+    suspend fun insertAll(cats: List<ImageDbEntity>)
 
-    @Query("SELECT * FROM ${Constants.IMAGES_TABLE}")
-    fun getAll(): PagingSource<Int, Cat>
+    @Query("SELECT * FROM $IMAGES_TABLE")
+    fun getAll(): PagingSource<Int, ImageDbEntity>
 
-    @Query("DELETE FROM cats")
+    @Query("DELETE FROM $IMAGES_TABLE")
     suspend fun deleteAll()
 }
