@@ -10,6 +10,6 @@ interface ImagesApi
     suspend fun getImages(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ) : Response<List<Image>>
+    ) : Response<ArrayList<Image>>
 
 }
