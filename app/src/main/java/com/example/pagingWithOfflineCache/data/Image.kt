@@ -8,4 +8,9 @@ data class Image(
     val id: String,
     @SerializedName("urls")
     val urls: Urls,
-)
+    @SerializedName("likes")
+    val likes: Int,
+    @SerializedName("user")
+    val user: User,
+
+    )

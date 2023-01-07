@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.pagingWithOfflineCache.R
 import com.example.pagingWithOfflineCache.data.local.ImageDbEntity
 import com.example.pagingWithOfflineCache.databinding.LayoutImageItemBinding
 
@@ -13,7 +14,13 @@ class ImagesAdapter : PagingDataAdapter<ImageDbEntity, ImagesAdapter.ViewHolder>
 
     inner class ViewHolder(private val binding:LayoutImageItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item:ImageDbEntity) {
-            binding.layoutImageItemImageView.load(item.url)
+            binding.layoutImageItemImageView.load(item.imageUrl) {
+                placeholder(R.drawable.plae_holder_layout)
+            }
+            binding.layoutImageItemImageViewUserProfile.load(item.userProfileImage)
+            binding.layoutImageItemTextViewUserName.text = item.userName
+            binding.layoutImageItemTextViewLocation.text = item.location
+            binding.layoutImageItemTextViewLikes.text = "${item.likes} likes"
         }
     }
 
