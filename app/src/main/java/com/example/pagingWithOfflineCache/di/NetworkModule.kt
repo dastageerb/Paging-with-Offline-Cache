@@ -19,20 +19,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule
-{
-
+class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesIntercepton() : Interceptor =
+    fun providesIntercepton(): Interceptor =
         Interceptor { chain ->
-            chain.run{
+            chain.run {
                 proceed(
                     request()
                         .newBuilder()
-                        .addHeader("Accept-Version","v1")
-                        .addHeader("Authorization","Client-ID ${BuildConfig.UNSPLASH_ACCESS_KEY}")
+                        .addHeader("Accept-Version", "v1")
+                        .addHeader("Authorization", "Client-ID ${BuildConfig.UNSPLASH_ACCESS_KEY}")
                         .build()
                 )
             }
@@ -40,20 +38,17 @@ class NetworkModule
 
     @Singleton
     @Provides
-    fun providesOkhttpClient(interceptor: Interceptor) : OkHttpClient
-
-    = OkHttpClient.Builder()
+    fun providesOkhttpClient(interceptor: Interceptor): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(interceptor)
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-        .connectTimeout(30,TimeUnit.SECONDS)
+        .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .build()
 
 
     @Singleton
     @Provides
-    fun provideRetrofitClient (okHttpClient: OkHttpClient) : Retrofit
-    = Retrofit.Builder()
+    fun provideRetrofitClient(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.unsplash.com/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
@@ -61,6 +56,6 @@ class NetworkModule
 
     @Singleton
     @Provides
-    fun provideUnSplashApi(retrofit: Retrofit) : ImagesApi = retrofit.create(ImagesApi::class.java)
+    fun provideUnSplashApi(retrofit: Retrofit): ImagesApi = retrofit.create(ImagesApi::class.java)
 
 }

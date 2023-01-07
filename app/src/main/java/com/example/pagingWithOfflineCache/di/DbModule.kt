@@ -16,12 +16,7 @@ import javax.inject.Singleton
 class DbModule {
     @Provides
     @Singleton
-    fun provideDb(
-        @ApplicationContext appContext: Context
-    ): ImagesDatabase {
-        return Room.databaseBuilder(
-            appContext, ImagesDatabase::class.java,
-            IMAGES_DB
-        ).build()
+    fun provideDb(@ApplicationContext appContext: Context): ImagesDatabase {
+        return Room.databaseBuilder(appContext, ImagesDatabase::class.java, IMAGES_DB).build()
     }
 }

@@ -1,9 +1,10 @@
-package com.example.pagingWithOfflineCache.data.local
+package com.example.pagingWithOfflineCache.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.pagingWithOfflineCache.data.local.model.RemoteKey
 
 
 @Dao

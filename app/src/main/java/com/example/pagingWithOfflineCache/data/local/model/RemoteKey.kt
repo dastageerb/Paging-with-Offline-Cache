@@ -1,4 +1,4 @@
-package com.example.pagingWithOfflineCache.data.local
+package com.example.pagingWithOfflineCache.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

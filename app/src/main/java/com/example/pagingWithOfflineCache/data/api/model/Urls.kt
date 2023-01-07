@@ -1,4 +1,4 @@
-package com.example.pagingWithOfflineCache.data
+package com.example.pagingWithOfflineCache.data.api.model
 
 
 import com.google.gson.annotations.SerializedName

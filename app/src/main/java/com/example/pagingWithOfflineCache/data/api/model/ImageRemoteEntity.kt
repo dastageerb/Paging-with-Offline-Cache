@@ -1,9 +1,9 @@
-package com.example.pagingWithOfflineCache.data
+package com.example.pagingWithOfflineCache.data.api.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Image(
+data class ImageRemoteEntity(
     @SerializedName("id")
     val id: String,
     @SerializedName("urls")
@@ -11,6 +11,4 @@ data class Image(
     @SerializedName("likes")
     val likes: Int,
     @SerializedName("user")
-    val user: User,
-
-    )
+    val user: User)
