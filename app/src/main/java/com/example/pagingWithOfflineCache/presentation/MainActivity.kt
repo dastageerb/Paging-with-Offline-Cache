@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         imagesAdapter = ImagesAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = imagesAdapter
+        recyclerView.adapter = imagesAdapter.withLoadStateHeaderAndFooter(
+            footer = ImageLoadingStateAdapter(), header = ImageLoadingStateAdapter()
+        )
     }
 
     private fun subscribeToImages() {
